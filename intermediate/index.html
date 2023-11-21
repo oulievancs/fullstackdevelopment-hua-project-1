@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 2</title>
+</head>
+<body>
+
+<!-- The canvas element -->
+<canvas id="myCanvas" width="400" height="200" style="border:1px solid #000;"></canvas>
+
+</body>
+
+<script>
+    const ENDPOINT = "http://62.217.127.19:8080/addition";
+
+    async function sendRequest() {
+        const result = await fetch(ENDPOINT);
+
+        if (!result.ok) {
+            throw new Error("Network response was not ok!");
+        } else {
+            return result.json();
+        }
+    }
+
+    async function drawCanvas() {
+        // Get the canvas element
+        var canvas = document.getElementById("myCanvas");
+
+        // Get the 2D rendering context
+        var ctx = canvas.getContext("2d");
+
+        try {
+            const data = await sendRequest();
+
+            // Define the number of rows and columns
+            var rows = data.length;
+            var cols = 3;
+
+            // Set cell width and height
+            var cellWidth = canvas.width / cols;
+            var cellHeight = canvas.height / rows;
+
+            // Draw the grid
+            for (var i = 0; i < rows; i++) {
+                for (var j = 0; j < cols; j++) {
+                    // Calculate the position of each cell
+                    var x = j * cellWidth;
+                    var y = i * cellHeight;
+
+                    // Draw a rectangle for each cell
+                    ctx.strokeRect(x, y, cellWidth, cellHeight);
+
+                    // Draw text in the center of each cell
+                    var text = data[i][j];
+                    ctx.fillText(text, x + cellWidth / 2, y + cellHeight / 2);
+                }
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    drawCanvas();
+</script>
+</html>

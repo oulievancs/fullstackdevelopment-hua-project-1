@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise 1</title>
+</head>
+
+<body>
+<div id="main_canvas">
+
+</div>
+
+
+<div id="second_canvas">
+
+</div>
+
+<div>
+    <input type="button" id="crazy_button" value="Crazy Button">
+</div>
+</body>
+
+<script>
+    const textBoxes = [
+        {
+            name: "text1",
+            id: "text1",
+            type: "text",
+            getValue: () => "",
+        },
+        {
+            name: "text2",
+            id: "text2",
+            type: "text",
+            getValue: () => "",
+        },
+        {
+            name: "text3",
+            id: "text3",
+            type: "text",
+            getValue: () => "",
+        },
+    ];
+
+    const headers = ["h1", "h2", "h3"];
+
+    function addSpaces(doc) {
+        doc.appendChild(document.createElement("br"));
+        doc.appendChild(document.createElement("br"));
+    }
+
+    function clearContainer(doc) {
+        // Loop to remove each child element
+        while (doc.firstChild) {
+            doc.removeChild(doc.firstChild);
+        }
+    }
+
+    function createLayout() {
+        var container = document.getElementById("main_canvas");
+
+        textBoxes.forEach((value, index, array) => {
+            var input = document.createElement("input");
+
+            input.type = {
+                ...value
+            };
+
+            container.appendChild(input);
+            addSpaces(container);
+
+            value.getValue = () => {
+                return input.value;
+            };
+        });
+    }
+
+    document.getElementById("crazy_button").onclick = (_event) => {
+        var container = document.getElementById("second_canvas");
+
+        clearContainer(container);
+
+        headers.forEach((value, index) => {
+            var head = document.createElement(value);
+
+            head.append(textBoxes[index].getValue());
+
+            container.append(head);
+            addSpaces(container);
+        });
+    };
+
+    createLayout();
+
+</script>
+</html>
