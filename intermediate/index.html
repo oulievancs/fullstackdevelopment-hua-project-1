@@ -14,6 +14,8 @@
 <script>
     const ENDPOINT = "http://62.217.127.19:8080/addition";
 
+    const fields = ["number1", "number2", "result"];
+
     async function sendRequest() {
         const result = await fetch(ENDPOINT);
 
@@ -53,7 +55,7 @@
                     ctx.strokeRect(x, y, cellWidth, cellHeight);
 
                     // Draw text in the center of each cell
-                    var text = data[i][j];
+                    var text = data[i][fields[j]];
                     ctx.fillText(text, x + cellWidth / 2, y + cellHeight / 2);
                 }
             }
