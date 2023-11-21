@@ -22,7 +22,7 @@
         if (!result.ok) {
             throw new Error("Network response was not ok!");
         } else {
-            return result.json();
+            return await result.json();
         }
     }
 
